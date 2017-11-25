@@ -1,0 +1,20 @@
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+    command: npm start
+
+  redis:
+    image: redis:4-alpine
+    volumes:
+      - redis:/data
+
+volumes:
+  postgres:
+  redis:

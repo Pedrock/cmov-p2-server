@@ -1,0 +1,30 @@
+{
+  "name": "cmov-p2-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "docker:dev": "node docker-dev.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/lodash": "^4.14.85",
+    "catbox-redis": "^4.0.0",
+    "dotenv-safe": "^4.0.4",
+    "hapi": "^17.1.1",
+    "joi": "^13.0.2",
+    "lodash": "^4.17.4",
+    "moment": "^2.19.2",
+    "wreck": "^14.0.2"
+  },
+  "devDependencies": {
+    "@types/hapi": "^16.1.11",
+    "@types/node": "^8.0.53",
+    "eslint": "^4.11.0",
+    "eslint-config-hapi": "^11.1.0",
+    "eslint-plugin-hapi": "^4.1.0",
+    "nodemon": "^1.12.1"
+  }
+}
