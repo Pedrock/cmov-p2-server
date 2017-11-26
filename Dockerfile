@@ -6,13 +6,13 @@ WORKDIR /server
 
 COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm install --production
 
 COPY . .
 
 ENV NODE_ENV production
 
-RUN npm run build; npm prune --production; apk del make gcc g++ python
+RUN apk del make gcc g++ python
 
-EXPOSE 8000
+EXPOSE 3000
 CMD ["npm", "start"]

@@ -34,6 +34,15 @@ module.exports = {
                     handler: Handlers.getCurrent,
                     validate: Schema.getCurrent
                 }
+            },
+            {
+                method: 'GET',
+                path: '/forecast',
+                config: {
+                    tags: ['api'],
+                    handler: Handlers.getForecast,
+                    validate: Schema.getForecast
+                }
             }
         ]);
     }

@@ -20,3 +20,9 @@ exports.getCurrent = {
         location: Joi.string().required()
     }
 };
+
+exports.getForecast = {
+    query: {
+        location: Joi.string().required()
+    }
+};

@@ -4,7 +4,7 @@ require('dotenv-safe').load({ allowEmptyValues: true });
 const Hapi = require('hapi');
 
 const server = new Hapi.Server({
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 3000,
     cache: {
         engine: require('catbox-redis'),
