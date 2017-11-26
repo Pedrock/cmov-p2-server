@@ -43,6 +43,15 @@ module.exports = {
                     handler: Handlers.getForecast,
                     validate: Schema.getForecast
                 }
+            },
+            {
+                method: 'GET',
+                path: '/search',
+                config: {
+                    tags: ['api'],
+                    handler: Handlers.locationSearch,
+                    validate: Schema.locationSearch
+                }
             }
         ]);
     }

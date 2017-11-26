@@ -28,6 +28,12 @@ const getWeatherForecast = async function (location) {
     return payload;
 };
 
+const locationSearch = async function (location, day, flags) {
+    const key = process.env.APIXU_KEY;
+    const { payload } = await Wreck.get(`http://api.apixu.com/v1/search.json?key=${key}&q=${location}`, { json: 'strict' });
+    return payload;
+};
+
 module.exports = {
     name: 'methods',
     version: '1.0.0',
@@ -47,6 +53,12 @@ module.exports = {
         server.method('getWeatherForecast', getWeatherForecast, {
             cache: {
                 expiresIn: 60 * 60 * 1000, // 1 hour
+                generateTimeout: 10000
+            }
+        });
+        server.method('locationSearch', locationSearch, {
+            cache: {
+                expiresIn: 30 * 24 * 60 * 60 * 1000, // 30 days
                 generateTimeout: 10000
             }
         });

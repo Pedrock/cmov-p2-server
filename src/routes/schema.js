@@ -26,3 +26,9 @@ exports.getForecast = {
         location: Joi.string().required()
     }
 };
+
+exports.locationSearch = {
+    query: {
+        q: Joi.string().required()
+    }
+};

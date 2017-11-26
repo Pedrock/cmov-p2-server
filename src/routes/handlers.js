@@ -47,4 +47,11 @@ exports.getForecast = async function (request, h) {
         day.hour = filterHours(day.hour);
         return _.pick(day, ['date', 'date_epoch', 'day', 'hour']);
     });
-}
+};
+
+exports.locationSearch = async function (request, h) {
+    const { q } = request.query;
+    const list = await request.server.methods.locationSearch(q);
+
+    return list.map(item => _.pick(item, ['id', 'name']));
+};
