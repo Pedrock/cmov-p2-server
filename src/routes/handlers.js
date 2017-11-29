@@ -38,7 +38,7 @@ exports.getWeatherHistory = async function (request, h) {
             fixWeatherCondition(forecast.day);
             forecast.hour = filterHours(forecast.hour).map(fixWeatherCondition);
         })
-        .map((forecast) => ({ ...getDayInfo(day), ...forecast }))
+        .thru((forecast) => ({ ...getDayInfo(day), ...forecast }))
         .value()
 };
 
