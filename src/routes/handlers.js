@@ -74,5 +74,10 @@ exports.locationSearch = async function (request, h) {
     const { q } = request.query;
     const list = await request.server.methods.locationSearch(q);
 
-    return list.map(item => _.pick(item, ['id', 'name']));
+    return list
+        .map(item => _.pick(item, ['id', 'name', 'region', 'country']))
+        .map(item => {
+            const [location] = item.name.split(',', 1);
+            return { ...item, location };
+        })
 };
