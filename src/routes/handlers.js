@@ -8,10 +8,10 @@ const filterHours = function (hours) {
         (i % 3 === 0 ? [...acc, { ...val, hour: i }] : acc), []);
 };
 
-const dayInfo = function (day) {
+const getDayInfo = function (day) {
     const m = Moment(day);
     return {
-        date: day,
+        date: m.format('YYYY-MM-DD'),
         week_day: m.format('dddd'),
         day_month: m.format('MMMM Do'),
         year: m.format('YYYY')
@@ -38,6 +38,7 @@ exports.getWeatherHistory = async function (request, h) {
             fixWeatherCondition(forecast.day);
             forecast.hour = filterHours(forecast.hour).map(fixWeatherCondition);
         })
+        .map((forecast) => ({ ...getDayInfo(day), ...forecast }))
         .value()
 };
 
@@ -49,15 +50,14 @@ exports.getPastDays = async function (request, h) {
         request.server.methods.getWeatherHistory(location, day)
             .then(info => _.get(info, ['forecast', 'forecastday', 0, 'day']))
             .then(fixWeatherCondition)
-            .then(weather => ({ ...dayInfo(day), ...weather }))
+            .then(weather => ({ ...getDayInfo(day), ...weather }))
     ));
 };
 
 exports.getCurrent = async function (request, h) {
     const { location } = request.query;
     const obj = await request.server.methods.getCurrentWeather(location);
-
-    return fixWeatherCondition(obj.current);
+    return fixWeatherCondition({ ...getDayInfo(obj.current.last_updated), ...obj.current});
 };
 
 exports.getForecast = async function (request, h) {
@@ -67,7 +67,8 @@ exports.getForecast = async function (request, h) {
     return obj.forecast.forecastday.map((day) => {
         fixWeatherCondition(day.day);
         day.hour = filterHours(day.hour).map(fixWeatherCondition);
-        return _.pick(day, ['date', 'date_epoch', 'day', 'hour']);
+        const obj = _.pick(day, ['date', 'date_epoch', 'day', 'hour']);
+        return { ...getDayInfo(day), ...obj }
     });
 };
 
