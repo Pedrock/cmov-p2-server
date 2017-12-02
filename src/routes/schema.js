@@ -32,3 +32,9 @@ exports.locationSearch = {
         q: Joi.string().required()
     }
 };
+
+exports.getCitiesInfo = {
+    query: {
+        ids: Joi.string().regex(/^[0-9]+(,[0-9]+)*$/).required()
+    }
+};

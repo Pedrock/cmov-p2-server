@@ -52,6 +52,15 @@ module.exports = {
                     handler: Handlers.locationSearch,
                     validate: Schema.locationSearch
                 }
+            },
+            {
+                method: 'GET',
+                path: '/cities',
+                config: {
+                    tags: ['api'],
+                    handler: Handlers.getCitiesInfo,
+                    validate: Schema.getCitiesInfo
+                }
             }
         ]);
     }

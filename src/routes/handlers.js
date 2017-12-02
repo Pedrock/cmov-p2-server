@@ -81,3 +81,15 @@ exports.locationSearch = async function (request, h) {
             return { ...item, location };
         })
 };
+
+exports.getCitiesInfo = async function (request, h) {
+    const ids = request.query.ids.split(',');
+    return Promise.all(ids.map(async (id) => {
+        const obj = await request.server.methods.getCurrentWeather(`id:${id}`);
+        const info = fixWeatherCondition(obj.current);
+        return {
+            temp_c: info.temp_c,
+            icon: info.condition.icon
+        }
+    }))
+};
