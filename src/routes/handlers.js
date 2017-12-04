@@ -33,7 +33,7 @@ exports.getWeatherHistory = async function (request, h) {
 
     return _.chain(dayInfo)
         .get(['forecast', 'forecastday', 0])
-        .pick(['day', 'hour'])
+        .pick(['day', 'hour', 'astro'])
         .tap((forecast) => {
             forecast.day = { ...getDayInfo(day), ...fixWeatherCondition(forecast.day) };
             forecast.hour = filterHours(forecast.hour).map(fixWeatherCondition);
@@ -66,7 +66,7 @@ exports.getForecast = async function (request, h) {
     return obj.forecast.forecastday.map((forecast) => {
         forecast.day = { ...getDayInfo(forecast.date), ...fixWeatherCondition(forecast.day) };
         forecast.hour = filterHours(forecast.hour).map(fixWeatherCondition);
-        return _.pick(forecast, ['day', 'hour']);
+        return _.pick(forecast, ['day', 'hour', 'astro']);
     });
 };
 
