@@ -43,7 +43,11 @@ exports.getWeatherHistory = async function (request, h) {
 
 exports.getPastDays = async function (request, h) {
     const { location } = request.query;
-    const days = _.range(1, 31).map(i => Moment().subtract(i, 'days').format('YYYY-MM-DD'));
+
+    const currentWeather = await request.server.methods.getCurrentWeather(location);
+    const localTime = currentWeather.location.localtime;
+
+    const days = _.range(1, 31).map(i => Moment(localTime).subtract(i, 'days').format('YYYY-MM-DD'));
 
     return await Promise.all(days.map(day =>
         request.server.methods.getWeatherHistory(location, day)
